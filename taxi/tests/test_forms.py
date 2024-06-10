@@ -23,7 +23,10 @@ class FormsTests(TestCase):
         form = DriverLicenseUpdateForm(data={"license_number": license_number})
         self.assertTrue(form.is_valid())
         self.assertEqual(form.cleaned_data["license_number"], license_number)
-        self.assertEqual(len(form.cleaned_data["license_number"]), length_license_number)
+        self.assertEqual(
+            len(form.cleaned_data["license_number"]),
+            length_license_number
+        )
         self.assertTrue(
             form.cleaned_data["license_number"][:3].isalpha()
             and form.cleaned_data["license_number"][:3].isupper()
