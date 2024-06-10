@@ -105,21 +105,6 @@ class PrivateTest(TestCase):
             password="12345",
         )
         self.client.force_login(self.user)
-
-    def test_retrieve_manufacturer_list_view(self) -> None:
-        Manufacturer.objects.create(name="BMW", country="Germany")
-        response = self.client.get(reverse("taxi:manufacturer-list"))
-        self.assertEqual(response.status_code, 200)
-
-        manufacturer = Manufacturer.objects.all()
-        self.assertEqual(
-            list(response.context["manufacturer_list"]),
-            list(manufacturer)
-        )
-
-        self.assertTemplateUsed(response, "taxi/manufacturer_list.html")
-
-    def test_retrieve_car_list_view(self) -> None:
         manufacturer = Manufacturer.objects.create(
             name="BMW",
             country="Germany"
@@ -133,6 +118,20 @@ class PrivateTest(TestCase):
             model="BMW X5",
             manufacturer=manufacturer
         ).drivers.add(drivers)
+
+    def test_retrieve_manufacturer_list_view(self) -> None:
+        response = self.client.get(reverse("taxi:manufacturer-list"))
+        self.assertEqual(response.status_code, 200)
+
+        manufacturer = Manufacturer.objects.all()
+        self.assertEqual(
+            list(response.context["manufacturer_list"]),
+            list(manufacturer)
+        )
+
+        self.assertTemplateUsed(response, "taxi/manufacturer_list.html")
+
+    def test_retrieve_car_list_view(self) -> None:
         response = self.client.get(reverse("taxi:car-list"))
         self.assertEqual(response.status_code, 200)
 
@@ -142,11 +141,6 @@ class PrivateTest(TestCase):
         self.assertTemplateUsed(response, "taxi/car_list.html")
 
     def test_retrieve_driver_list_view(self) -> None:
-        Driver.objects.create_user(
-            username="Test",
-            password="12345",
-            license_number="12345test"
-        )
         response = self.client.get(reverse("taxi:driver-list"))
         self.assertEqual(response.status_code, 200)
 
