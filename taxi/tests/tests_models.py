@@ -7,7 +7,10 @@ class ModelTests(TestCase):
     def test_manufacturer_str(self) -> None:
         name = "BMW"
         country = "Germany"
-        manufacturer = Manufacturer.objects.create(name=name, country=country)
+        manufacturer = Manufacturer.objects.create(
+            name=name,
+            country=country
+        )
         self.assertEqual(str(manufacturer), f"{name} {country}")
 
     def test_driver_str(self) -> None:
