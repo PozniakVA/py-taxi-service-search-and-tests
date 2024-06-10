@@ -16,11 +16,17 @@ class ModelTests(TestCase):
             first_name="Eren",
             last_name="Jaeger",
         )
-        self.assertEqual(str(driver), f"{driver.username} ({driver.first_name} {driver.last_name})")
+        self.assertEqual(
+            str(driver),
+            f"{driver.username} ({driver.first_name} {driver.last_name})"
+        )
 
     def test_car_str(self) -> None:
         model = "BMW x4"
-        manufacturer = Manufacturer.objects.create(name="BMW", country="Germany")
+        manufacturer = Manufacturer.objects.create(
+            name="BMW",
+            country="Germany"
+        )
         car = Car.objects.create(
             model=model,
             manufacturer=manufacturer,
